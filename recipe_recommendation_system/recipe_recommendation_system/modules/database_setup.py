@@ -60,9 +60,10 @@ class DatabaseSetup:
         """Read in the table as a Pandas Dataframe"""
         df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.connection)
         self.connection.close()
-        return df  ###   Run Functions   ###
+        return df
 
 
+###   Run Functions   ###
 if __name__ == "__main__":
     # Instantiate the database instance/connection
     db = DatabaseSetup()
