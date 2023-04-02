@@ -8,7 +8,7 @@ class DataPrep:
 
     def __init__(
         self,
-        local_file_path_to_full_1m_recipe_data: str = f"/Users/coryrandolph/Downloads/dataset/full_dataset.csv",
+        local_file_path_to_full_1m_recipe_data: str = f"/Users/coryrandolph/Downloads/full_dataset.csv",
     ):
         self.local_file_path_to_full_1m_recipe_data: str = (
             local_file_path_to_full_1m_recipe_data
@@ -32,9 +32,11 @@ class DataPrep:
         df.rename(columns={"Unnamed: 0": "id"}, inplace=True)
 
         # Keep just the first 1,000 rows
-        df_reduced = df.head(1_000)
+        df_reduced = df.sample(n=1_000, random_state=3)
         print(df_reduced.head())
-        df_reduced.to_csv("data/recipe_data_1000.csv", index=False)
+        df_reduced.to_csv(
+            "./development/data_prep/data/recipe_data_1000.csv", index=False
+        )
 
         return f"Data sample of 1,000 sample create successfully"
 
