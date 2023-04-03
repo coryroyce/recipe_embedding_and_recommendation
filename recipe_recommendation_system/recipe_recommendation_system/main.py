@@ -1,3 +1,4 @@
+# pylint: disable=E0401
 from modules.semantic_search import SemanticSearch
 from modules.database_setup import DatabaseSetup
 
@@ -17,6 +18,8 @@ class InitialSetup:
 
     def run_prep_process(self):
         """Organize all of the main steps in the process so that the data can all be refreshed with one call"""
+        # TODO: Add the database_setup run_process here
+        # TODO: Save the pre-computed semantic indexes into the semantic_search_indices folder
         print(f"Generating semantic index for recipe titles...")
         semantic_search_instance = SemanticSearch()
         initial_setup_instance.run_prep_process()

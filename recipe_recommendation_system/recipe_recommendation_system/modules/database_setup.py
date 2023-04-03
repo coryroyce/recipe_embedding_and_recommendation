@@ -21,6 +21,18 @@ class DatabaseSetup:
     def __del__(self):
         self.connection.close()
 
+    def run_prep_process(self):
+        """Create all tables and SQLite database if it doesn't exist yet"""
+        print(f"Creating recipes table...")
+        self.create_recipe_data_table()
+
+        print(f"Creating ingredient substitution ground truth table...")
+        self.create_ingredient_substitutions_ground_truth_table()
+
+        print(f"Preparation Process Complete!!!")
+
+        return
+
     def create_recipe_data_table(self):
         """Load data from a csv"""
         # Choose to load the sample data set or the full dataset
@@ -56,6 +68,25 @@ class DatabaseSetup:
 
         return
 
+    def create_ingredient_substitutions_ground_truth_table(self):
+        """Load data from a csv"""
+        # Add the name to the file path
+        file_path_ingredient_substitutions_ground_truth_csv = (
+            f"{self.file_path_data}/df_ingredient_substitutions_ground_truth.csv"
+        )
+
+        # Read specific columns of csv file using Pandas
+        df = pd.read_csv(
+            file_path_ingredient_substitutions_ground_truth_csv,
+            usecols=["ingredient", "substitutes"],
+        )
+
+        # Create the table in SQLite database
+        table_name = "ingredient_substitutions_ground_truth"
+        df.to_sql(table_name, self.connection, if_exists="replace", index=True)
+        self.connection.commit()
+        return
+
     def read_data_as_df(self, table_name: str):
         """Read in the table as a Pandas Dataframe"""
         df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.connection)
@@ -68,8 +99,8 @@ if __name__ == "__main__":
     # Instantiate the database instance/connection
     db = DatabaseSetup()
 
-    # Create the recipe table if it doesn't exist
-    # db.create_recipe_data_table()
+    # Create tables
+    # db.run_prep_process()
 
     # Read a table by name from the database as a pandas dataframe
     df_recipe_sample = db.read_data_as_df(table_name="recipes")

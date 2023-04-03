@@ -2,16 +2,17 @@ from txtai.embeddings import Embeddings
 import pandas as pd
 import re
 
+# pylint: disable=E0401
+from database_setup import DatabaseSetup
+
 
 class SemanticSearch:
     """
     Manage all of the semantic search capabilities for ingredient and title word embeddings
     """
 
-    def __init__(
-        self, df_recipe: pd.DataFrame, use_sample_ingredient_index: bool = False
-    ):
-        self.df_recipe: pd.DataFrame = df_recipe
+    def __init__(self, use_sample_ingredient_index: bool = False):
+        self.df_recipe: pd.DataFrame = self.load_df_from_db(table_name="recipes")
         self.file_path_data: str = (
             f"recipe_recommendation_system/recipe_recommendation_system/data"
         )
@@ -26,7 +27,7 @@ class SemanticSearch:
         self.file_path_substitutions_ground_truth: str = (
             f"{self.file_path_data}/df_ingredient_substitutions_ground_truth.csv"
         )
-        self.df_ingredient_substitutions_ground_truth: pd.DataFrame = None
+        self.df_ingredient_substitutions_ground_truth: pd.DataFrame = pd.DataFrame()
         self.df_unique_ingredients: pd.DataFrame = pd.DataFrame()
         self.use_sample_ingredient_index: bool = use_sample_ingredient_index
 
@@ -84,7 +85,7 @@ class SemanticSearch:
     def create_df_ingredient_substitutions_ground_truth(self):
         """Load in the ground truth data frame"""
         # Load in the ingredients ground truth from a csv
-        df = pd.read_csv(self.file_path_substitutions_ground_truth)
+        df = self.load_df_from_db(table_name="ingredient_substitutions_ground_truth")
 
         # Clean the ground truth dataframe
         # Split each string into a list
@@ -212,13 +213,13 @@ class SemanticSearch:
         )
 
         return temp_embedding
-    
-    def load_df_recipes(self):
+
+    def load_df_from_db(self, table_name: str):
         """Load in a dataframe of the recipes from the sql database"""
         db = DatabaseSetup()
-        read_data_as_df(self, table_name: str)
+        df = db.read_data_as_df(table_name=table_name)
 
-        return
+        return df
 
 
 ###   Run Functions   ###
