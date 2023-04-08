@@ -1,6 +1,11 @@
 # pylint: disable=E0401
-from modules.semantic_search import SemanticSearch
+
+import sys
+
+# Add the modules folder to the path to find the custom modules
+sys.path.insert(0, "recipe_recommendation_system/recipe_recommendation_system/modules")
 from modules.database_setup import DatabaseSetup
+from modules.semantic_search import SemanticSearch
 
 
 class InitialSetup:
@@ -18,13 +23,37 @@ class InitialSetup:
 
     def run_prep_process(self):
         """Organize all of the main steps in the process so that the data can all be refreshed with one call"""
-        # TODO: Add the database_setup run_process here
-        # TODO: Save the pre-computed semantic indexes into the semantic_search_indices folder
-        print(f"Generating semantic index for recipe titles...")
-        semantic_search_instance = SemanticSearch()
-        initial_setup_instance.run_prep_process()
+        # Setup the data base connection
+        db = DatabaseSetup()
+        # If new data needs to be loaded from a csv, then uncomment the line below
+        # db.create_data_sample_with_1000_records()
 
-        return semantic_search_instance
+        # Example read of data:
+        # Read a table by name from the database as a pandas dataframe
+        # df_recipe_sample = db.read_data_as_df(table_name="recipes")
+        # print(df_recipe_sample.head())
+
+        # TODO: Save the pre-computed semantic indexes into the semantic_search_indices folder
+        # print(f"Generating semantic index for recipe titles...")
+        semantic_search_instance = SemanticSearch()
+        semantic_search_instance.run_prep_process()
+        recipe_title_to_search = input("Type a title to search:\n")
+        print("Matching recipe title:\n")
+        print(
+            semantic_search_instance.query_semantic_index_recipe_titles(
+                query=recipe_title_to_search
+            )
+        )
+
+        ingredients_to_search = input("Type an ingredient to search:\n")
+        print("Matching ingredients :\n")
+        print(
+            semantic_search_instance.query_semantic_index_ingredients(
+                query=ingredients_to_search
+            )
+        )
+
+        return  # semantic_search_instance
 
 
 ###   Run Functions   ###
@@ -32,4 +61,4 @@ if __name__ == "__main__":
     initial_setup_instance = InitialSetup()
     initial_setup_instance.run_prep_process()
 
-    print("hi")
+    print("Done!")
