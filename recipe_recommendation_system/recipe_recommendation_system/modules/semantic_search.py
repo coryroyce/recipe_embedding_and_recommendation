@@ -208,11 +208,12 @@ class SemanticSearch:
     def load_semantic_search_index(embedding: Embeddings, embedding_name_to_load: str):
         """Save a pre-computed semantic search index to avoid re-generation"""
         # Save the embedding to the current directory
-        temp_embedding = embedding.load(
+        # temp_embedding =
+        embedding.load(
             f"./recipe_recommendation_system/recipe_recommendation_system/semantic_search_indices/{embedding_name_to_load}.tar.gz"
         )
 
-        return temp_embedding
+        return  # temp_embedding
 
     def load_df_from_db(self, table_name: str):
         """Load in a dataframe of the recipes from the sql database"""
@@ -226,5 +227,25 @@ class SemanticSearch:
 if __name__ == "__main__":
     # # Instantiate the database instance/connection
     semantic_search = SemanticSearch()
-    semantic_search.run_prep_process()
+    # semantic_search.run_prep_process()
+    # print(semantic_search.query_semantic_index_recipe_titles(query="pork"))
+    # semantic_search.save_semantic_search_index(
+    #     embedding=semantic_search.embeddings_ingredients,
+    #     embedding_name_to_save="embeddings_ingredients",
+    # )
+    # semantic_search.save_semantic_search_index(
+    #     embedding=semantic_search.embeddings_recipe_titles,
+    #     embedding_name_to_save="embeddings_recipe_titles",
+    # )
+
+    # Update semantic search index from pre-calculated index
+    # semantic_search.embeddings_recipe_titles = (
+    semantic_search.load_semantic_search_index(
+        embedding=semantic_search.embeddings_recipe_titles,
+        embedding_name_to_load="embeddings_recipe_titles",
+    )
+
+    print(semantic_search.query_semantic_index_recipe_titles(query="pork"))
+
     print("hi")
+    # self.embeddings_recipe_titles
