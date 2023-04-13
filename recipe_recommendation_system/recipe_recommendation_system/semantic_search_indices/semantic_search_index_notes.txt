@@ -1,0 +1,1 @@
+The pre-compted indices are too large for github so they need to be ignored and recomputed locally each time the application is run.
