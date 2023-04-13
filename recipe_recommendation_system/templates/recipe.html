@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} {{ title }} {% endblock %}</h1>
+    <br>
+
+    <h3>Ingredients:</h3>
+    <br>
+    <pre style="white-space:pre-wrap">{{ ingredients }}</pre>
+
+    <h3>Directions:</h3>
+    <br>
+    <pre style="white-space:pre-wrap">{{ directions }}</pre>
+
+    <h3>Substitutions:</h3>
+    <pre><code>{{ subs }}</code></pre>
+{% endblock %}
