@@ -5,6 +5,10 @@ import re
 # pylint: disable=E0401
 from .database_setup import DatabaseSetup
 
+# from recipe_recommendation_system.modules.database_setup import (
+#     DatabaseSetup,
+# )
+
 
 class SemanticSearch:
     """
@@ -266,8 +270,8 @@ if __name__ == "__main__":
     # # Instantiate the database instance/connection
     semantic_search = SemanticSearch()
     # Uncomment below line to re-compute all semantic search indices based on what is in the current database
-    # semantic_search.recalculate_all_semantic_search_indices()
-    semantic_search.run_prep_process()
+    semantic_search.recalculate_all_semantic_search_indices()
+    # semantic_search.run_prep_process()
 
     # Test out the semantic search for recipe titles
     print(f"Semantic search results for recipe titles (pork):")
