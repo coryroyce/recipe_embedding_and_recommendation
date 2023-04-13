@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Search the recipe database{% endblock %}</h1>
+
+    <!-- SEARCH FORM -->
+    <form method="post">
+        <input type="text" name="search" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <!-- OUTPUT RESULTS -->
+    {% if recipes | length != 0 %}
+    <br>
+    <p>returned {{ recipes | length}} results</p>
+    <br>
+    <table id="results">
+        <th>
+            <tr>
+            <td>Title</td><td>Ingredients</td><td>Directions</td>
+            </tr>
+        </th>
+
+        {% for recipe in recipes %}
+            <tr>
+                <td>{{ recipe['title'] }}</td>
+                <td>{{ recipe['ingredients'] }}</td>
+                <td>{{ recipe['directions'] }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {% endif %}
+{% endblock %}

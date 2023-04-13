@@ -3,7 +3,7 @@ import pandas as pd
 import re
 
 # pylint: disable=E0401
-from database_setup import DatabaseSetup
+from .database_setup import DatabaseSetup
 
 
 class SemanticSearch:
@@ -76,11 +76,11 @@ class SemanticSearch:
         matching_indices = [tup[0] for tup in matches]
 
         # Get the ingredient associated with the each index
-        top_k_matching_recipe_titles = self.df_recipe.iloc[matching_indices][
-            "title"
-        ].tolist()
+        # top_k_matching_recipe_titles = self.df_recipe.iloc[matching_indices][
+        #     "title"
+        # ].tolist()
 
-        return top_k_matching_recipe_titles
+        return matching_indices
 
     def create_df_ingredient_substitutions_ground_truth(self):
         """Load in the ground truth data frame"""
