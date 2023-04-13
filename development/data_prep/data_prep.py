@@ -37,6 +37,10 @@ class DataPrep:
         df_reduced.to_csv(
             "./development/data_prep/data/recipe_data_1000.csv", index=False
         )
+        # Uncomment to export the standard dataset name
+        # df_reduced.to_csv(
+        #     "./development/data_prep/data/recipe_data.csv", index=False
+        # )
 
         return f"Data sample of 1,000 sample create successfully"
 

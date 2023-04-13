@@ -110,7 +110,8 @@ if __name__ == "__main__":
     # Instantiate the database instance/connection
     db = DatabaseSetup()
 
-    # Create tables
+    # Create tables in the database based on the recipe_data.csv in data folder
+    # db = DatabaseSetup(use_sample_db = False)
     # db.run_prep_process()
 
     # Read a table by name from the database as a pandas dataframe
