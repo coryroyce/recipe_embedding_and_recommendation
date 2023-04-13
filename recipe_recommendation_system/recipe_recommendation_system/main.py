@@ -4,6 +4,7 @@ import sys
 
 # Add the modules folder to the path to find the custom modules
 sys.path.insert(0, "recipe_recommendation_system/recipe_recommendation_system/modules")
+sys.path.insert(0, "recipe_recommendation_system/modules")
 from modules.database_setup import DatabaseSetup
 from modules.semantic_search import SemanticSearch
 
@@ -24,7 +25,7 @@ class InitialSetup:
     def run_prep_process(self):
         """Organize all of the main steps in the process so that the data can all be refreshed with one call"""
         # Setup the data base connection
-        db = DatabaseSetup()
+        # db = DatabaseSetup()
         # If new data needs to be loaded from a csv, then uncomment the line below
         # db.create_data_sample_with_1000_records()
 
@@ -33,8 +34,7 @@ class InitialSetup:
         # df_recipe_sample = db.read_data_as_df(table_name="recipes")
         # print(df_recipe_sample.head())
 
-        # TODO: Save the pre-computed semantic indexes into the semantic_search_indices folder
-        # print(f"Generating semantic index for recipe titles...")
+        # Semantic search
         semantic_search_instance = SemanticSearch()
         semantic_search_instance.run_prep_process()
         recipe_title_to_search = input("Type a title to search:\n")

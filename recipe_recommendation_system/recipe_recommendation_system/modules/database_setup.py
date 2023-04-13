@@ -12,14 +12,25 @@ class DatabaseSetup:
             f"recipe_recommendation_system/recipe_recommendation_system/data"
         )
         self.db_name: str = f"recipe_database.db"
-        self.connection = sqlite3.connect(
-            database=f"{self.file_path_data}/{self.db_name}", check_same_thread=False
-        )
-        self.cursor = self.connection.cursor()
+        self.db_path: str = f"{self.file_path_data}/{self.db_name}"
+        try:
+            self.connection = sqlite3.connect(
+                database=self.db_path,
+                check_same_thread=False,
+            )
+            self.cursor = self.connection.cursor()
+        except sqlite3.Error as e:
+            raise Exception(f"Error connecting to database: {e}")
         self.use_sample_db: bool = True
 
     def __del__(self):
-        self.connection.close()
+        # if the connection is open, close it
+        try:
+            if hasattr(self, "connection"):
+                self.connection.close()
+                # print(f"SQLite db connection now closed.")
+        except sqlite3.Error as e:
+            print(f"Error closing SQLite connection: {e}")
 
     def run_prep_process(self):
         """Create all tables and SQLite database if it doesn't exist yet"""

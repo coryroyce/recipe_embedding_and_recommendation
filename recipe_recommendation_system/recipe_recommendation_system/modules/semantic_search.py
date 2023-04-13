@@ -33,9 +33,42 @@ class SemanticSearch:
 
     def run_prep_process(self):
         """Organize all of the main steps in the process so that the data can all be refreshed with one call"""
+        # Load the pre-computed semantic search indices for recipe titles
+        print(f"Loading pre-computed semantic search index for recipe titles...")
+        self.load_semantic_search_index(
+            embedding=self.embeddings_recipe_titles,
+            embedding_name_to_load="embeddings_recipe_titles",
+        )
+
+        ### Prep the ingredient dataframes ###
+        # Load the ground truth ingredient substitution dataframe
+        print(f"Gathering list of unique ingredients...")
+        self.create_df_ingredient_substitutions_ground_truth()
+
+        # Create unique list of possible ingredient substitutes
+        self.generate_unique_ingredients_df()
+
+        # Load the pre-computed semantic search indices for ingredient substitutions
+        print(f"Loading pre-computed semantic search index for ingredients...")
+        self.load_semantic_search_index(
+            embedding=self.embeddings_ingredients,
+            embedding_name_to_load="embeddings_ingredients",
+        )
+
+        return
+
+    def recalculate_all_semantic_search_indices(self):
+        """Organize the steps to recalculate and save semantic search indices for both
+        the recipe titles and the ingredient substitutions"""
         # Update the txtai index for all of the recipe titles
         print(f"Generating semantic index for recipe titles...")
         self.create_semantic_search_index_recipe_titles()
+
+        # Save the pre-computed indices
+        self.save_semantic_search_index(
+            embedding=semantic_search.embeddings_recipe_titles,
+            embedding_name_to_save="embeddings_recipe_titles",
+        )
 
         ### Create ingredients based semantic search ###
         # Load the ground truth ingredient substitution dataframe
@@ -49,7 +82,12 @@ class SemanticSearch:
         print(f"Generating semantic index for ingredients...")
         self.create_semantic_search_index_ingredients()
 
-        print(f"Preparation Process Complete!!!")
+        semantic_search.save_semantic_search_index(
+            embedding=semantic_search.embeddings_ingredients,
+            embedding_name_to_save="embeddings_ingredients",
+        )
+
+        print(f"All semantic search indices have been recomputed and saved!!!")
 
         return
 
@@ -227,25 +265,16 @@ class SemanticSearch:
 if __name__ == "__main__":
     # # Instantiate the database instance/connection
     semantic_search = SemanticSearch()
-    # semantic_search.run_prep_process()
-    # print(semantic_search.query_semantic_index_recipe_titles(query="pork"))
-    # semantic_search.save_semantic_search_index(
-    #     embedding=semantic_search.embeddings_ingredients,
-    #     embedding_name_to_save="embeddings_ingredients",
-    # )
-    # semantic_search.save_semantic_search_index(
-    #     embedding=semantic_search.embeddings_recipe_titles,
-    #     embedding_name_to_save="embeddings_recipe_titles",
-    # )
+    # Uncomment below line to re-compute all semantic search indices based on what is in the current database
+    # semantic_search.recalculate_all_semantic_search_indices()
+    semantic_search.run_prep_process()
 
-    # Update semantic search index from pre-calculated index
-    # semantic_search.embeddings_recipe_titles = (
-    semantic_search.load_semantic_search_index(
-        embedding=semantic_search.embeddings_recipe_titles,
-        embedding_name_to_load="embeddings_recipe_titles",
-    )
-
+    # Test out the semantic search for recipe titles
+    print(f"Semantic search results for recipe titles (pork):")
     print(semantic_search.query_semantic_index_recipe_titles(query="pork"))
 
-    print("hi")
-    # self.embeddings_recipe_titles
+    # Test out the semantic search for ingredient substitutions
+    print(f"Semantic search results for ingredient substitutions (egg):")
+    print(semantic_search.query_semantic_index_ingredients(query="egg"))
+
+    print("Done!")
