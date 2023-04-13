@@ -10,6 +10,7 @@ packages = [{include = "recipe_recommendation_system"}]
 python = "^3.8"
 pandas = "^1.5.2"
 txtai = "^5.4.0"
+jupyterlab = "^3.6.3"
 
 
 [tool.poetry.group.dev.dependencies]

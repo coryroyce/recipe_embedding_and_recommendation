@@ -12,11 +12,13 @@
     <!-- OUTPUT RESULTS -->
     {% if recipes | length != 0 %}
     <br>
-    <p>"{{ cur_query }}"returned {{ recipes | length}} results</p>
+    <p>"{{ cur_query }}" results:</p>
     <br>
 
-    {% for recipe in recipes %}
-        <h3>{{ recipe }}</h3>
+    {% for i in range(recipes | length) %}
+        <h3><a href="{{ url_for('show_recipe', index=indices[i]) }}">
+            {{ recipes[i] }}
+        </a></h3>
     {% endfor %}
 
     {% endif %}
