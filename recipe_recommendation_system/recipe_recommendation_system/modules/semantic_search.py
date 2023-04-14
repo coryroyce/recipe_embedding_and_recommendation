@@ -3,11 +3,11 @@ import pandas as pd
 import re
 
 # pylint: disable=E0401
-#from .database_setup import DatabaseSetup
+from .database_setup import DatabaseSetup
 
-from recipe_recommendation_system.modules.database_setup import (
-    DatabaseSetup,
-)
+# from recipe_recommendation_system.modules.database_setup import (
+#     DatabaseSetup,
+# )
 
 
 class SemanticSearch:
