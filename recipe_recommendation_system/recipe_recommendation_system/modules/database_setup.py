@@ -7,7 +7,7 @@ class DatabaseSetup:
     Database class for creating and reading SQLite data
     """
 
-    def __init__(self):
+    def __init__(self, use_sample_db :bool = True):
         self.file_path_data: str = (
             f"recipe_recommendation_system/recipe_recommendation_system/data"
         )
@@ -21,7 +21,8 @@ class DatabaseSetup:
             self.cursor = self.connection.cursor()
         except sqlite3.Error as e:
             raise Exception(f"Error connecting to database: {e}")
-        self.use_sample_db: bool = True
+        
+        self.use_sample_db = use_sample_db
 
     def __del__(self):
         # if the connection is open, close it
@@ -108,12 +109,12 @@ class DatabaseSetup:
 ###   Run Functions   ###
 if __name__ == "__main__":
     # Instantiate the database instance/connection
-    db = DatabaseSetup()
+    # db = DatabaseSetup()
 
     # Create tables in the database based on the recipe_data.csv in data folder
-    # db = DatabaseSetup(use_sample_db = False)
-    # db.run_prep_process()
+    db = DatabaseSetup(use_sample_db=False)
+    db.run_prep_process()
 
     # Read a table by name from the database as a pandas dataframe
     df_recipe_sample = db.read_data_as_df(table_name="recipes")
-    print(df_recipe_sample.head())
+    print(df_recipe_sample.shape)
