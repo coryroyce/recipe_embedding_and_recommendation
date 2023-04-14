@@ -32,15 +32,16 @@ class DataPrep:
         df.rename(columns={"Unnamed: 0": "id"}, inplace=True)
 
         # Keep just the first 1,000 rows
-        df_reduced = df.sample(n=1_000, random_state=3)
+        df_reduced = df.sample(n=10_000, random_state=3)
         print(df_reduced.head())
-        df_reduced.to_csv(
-            "./development/data_prep/data/recipe_data_1000.csv", index=False
-        )
-        # Uncomment to export the standard dataset name
+
+        # Drop duplicates
+        df_reduced.drop_duplicates(subset=["title"], keep="first", inplace=True)
         # df_reduced.to_csv(
-        #     "./development/data_prep/data/recipe_data.csv", index=False
+        #     "./development/data_prep/data/recipe_data_1000.csv", index=False
         # )
+        # Uncomment to export the standard dataset name
+        df_reduced.to_csv("./development/data_prep/data/recipe_data.csv", index=False)
 
         return f"Data sample of 1,000 sample create successfully"
 
@@ -50,4 +51,4 @@ if __name__ == "__main__":
     # Instantiate class and method to be run
     data_prep = DataPrep()
     data_prep.create_data_sample_with_1000_records()
-    # print("hi")
+    print("hi")
