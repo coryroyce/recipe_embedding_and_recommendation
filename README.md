@@ -7,11 +7,6 @@ Develop a recommendation system for recipes based on similar ingredients. Apply 
 ## Setup
 
 1. Clone this repository locally
-1. Recompute the semantic search indices
-    * Note. These saved semantic indices are to large to load into github and need to be recomputed for a new install
-    * File to modify: recipe_recommendation_system/recipe_recommendation_system/modules/semantic_search.py
-    * Uncomment line ~273 `# semantic_search.recalculate_all_semantic_search_indices()`
-    * Run this file directly
 1. Run Flask app to run locally
 
 ### Modify Sample Dataset (Optional Dev)
