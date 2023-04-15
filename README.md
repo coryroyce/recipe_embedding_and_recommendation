@@ -6,8 +6,26 @@ Develop a recommendation system for recipes based on similar ingredients. Apply 
 
 ## Setup
 
-1. Clone this repository locally
+Note that this repo uses [Poetry](https://python-poetry.org/docs/) to manage the packages
+1. Clone this repo
+    * `git clone https://github.com/coryroyce/recipe_embedding_and_recommendation.git`
+1. Install [Poetry](https://python-poetry.org/docs/) if needed
+1. Change directory into the "recipe_recommendation_system" subfolder
+    * `cd recipe_recommendation_system`
+1. Run `poetry install` to load all of the needed python packages and create a virtual environnement.
+1. Activate the virtual environment
+    * `source .venv/bin/activate`
 1. Run Flask app to run locally
+    * `python -m flask --app app run`
+    * Click the link to the local port and interact with the demo
+
+## Architecture
+
+1. Flask Application
+1. Recipe Dataset
+1. NER extraction of ingredients
+1. Semantic Search Embeddings for Recipes and Ingredients
+
 
 ### Modify Sample Dataset (Optional Dev)
 
