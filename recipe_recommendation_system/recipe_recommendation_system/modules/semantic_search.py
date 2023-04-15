@@ -1,13 +1,13 @@
-from txtai.embeddings import Embeddings
-import pandas as pd
 import re
+from pathlib import Path
+
+import pandas as pd
+from txtai.embeddings import Embeddings
+
+# from recipe_recommendation_system.modules.database_setup import DatabaseSetup
 
 # pylint: disable=E0401
 from .database_setup import DatabaseSetup
-
-# from recipe_recommendation_system.modules.database_setup import (
-#     DatabaseSetup,
-# )
 
 
 class SemanticSearch:
@@ -37,6 +37,16 @@ class SemanticSearch:
 
     def run_prep_process(self):
         """Organize all of the main steps in the process so that the data can all be refreshed with one call"""
+        # Check if pre-computed indices exist if not re-compute them
+        if self.check_if_semantic_search_index_exists(
+            embedding_name_to_check="embeddings_recipe_titles"
+        ) and self.check_if_semantic_search_index_exists(
+            embedding_name_to_check="embeddings_ingredients"
+        ):
+            pass
+        else:
+            self.recalculate_all_semantic_search_indices()
+
         # Load the pre-computed semantic search indices for recipe titles
         print(f"Loading pre-computed semantic search index for recipe titles...")
         self.load_semantic_search_index(
@@ -237,6 +247,18 @@ class SemanticSearch:
         return top_k_matching_ingredients
 
     @staticmethod
+    def check_if_semantic_search_index_exists(embedding_name_to_check: str):
+        """Check if the pre-computed semantic search index already exists"""
+        semantic_search_index_path = Path(
+            f"./recipe_recommendation_system/recipe_recommendation_system/semantic_search_indices/{embedding_name_to_check}.tar.gz"
+        )
+
+        if semantic_search_index_path.exists():
+            return True
+        else:
+            return False
+
+    @staticmethod
     def save_semantic_search_index(embedding: Embeddings, embedding_name_to_save: str):
         """Save a pre-computed semantic search index to avoid re-generation"""
         # Save the embedding to the current directory
@@ -267,11 +289,12 @@ class SemanticSearch:
 
 ###   Run Functions   ###
 if __name__ == "__main__":
-    # # Instantiate the database instance/connection
+    # Instantiate the database instance/connection
     semantic_search = SemanticSearch()
-    # Uncomment below line to re-compute all semantic search indices based on what is in the current database
-    semantic_search.recalculate_all_semantic_search_indices()
-    # semantic_search.run_prep_process()
+
+    # Run the prep process that check if the semantic indices exists and recomputes
+    # them if needed.
+    semantic_search.run_prep_process()
 
     # Test out the semantic search for recipe titles
     print(f"Semantic search results for recipe titles (pork):")

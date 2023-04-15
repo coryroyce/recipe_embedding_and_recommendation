@@ -11,6 +11,7 @@ python = "^3.8"
 pandas = "^1.5.2"
 txtai = "^5.4.0"
 jupyterlab = "^3.6.3"
+pathlib = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
