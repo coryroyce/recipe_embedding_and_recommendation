@@ -4,14 +4,52 @@
     <h1>{% block title %} {{ title }} {% endblock %}</h1>
     <br>
 
-    <h3>Ingredients:</h3>
-    <br>
-    <pre style="white-space:pre-wrap">{{ ingredients }}</pre>
+    <div>
+      <h3>Ingredients:</h3>
+      <br>
+      <p style="white-space:pre-wrap">{{ ingredients | safe }}</p>
+    </div>
+    
+    <div id="popup" class="popup card bg-primary text-white w-auto" style="display:none;">
+      <div id="popup-content" class="popup-content d-inline-block"></div>
+    </div>
 
-    <h3>Directions:</h3>
     <br>
-    <pre style="white-space:pre-wrap">{{ directions }}</pre>
+    <div>
+      <h3>Directions:</h3>
+      <br>
+      <p style="white-space:pre-wrap">{{ directions }}</p>
+    </div>
 
-    <h3>Substitutions:</h3>
-    <pre><code>{{ subs }}</code></pre>
+  
+    <script>
+      var popupContent = document.getElementById('popup-content');
+      var popup = document.getElementById('popup');
+  
+      function showPopup(text, target) {
+        if (popup.style.display === "block") {
+          popup.style.display = "none";
+        } else {
+          popup.style.display = "block";
+          popup.style.position = "absolute"
+          popupContent.innerHTML = text;
+          var rect = target.getBoundingClientRect();
+          popup.style.top = rect.bottom + "px";
+          popup.style.left = rect.left + "px";
+        }
+      }
+  
+      var data = JSON.parse('{{ subs | safe }}');
+  
+      var highlightedWords = document.querySelectorAll('.highlighted-word');
+  
+      for (let i = 0; i < highlightedWords.length; i++) {
+        let key = highlightedWords[i].innerHTML;
+        highlightedWords[i].addEventListener('click', function() {
+          let subtext = data[key].join(', ')
+          let text = `Substitutions for ${key}: <br>${subtext}`
+          showPopup(text, event.target);
+        });
+      }
+    </script>
 {% endblock %}

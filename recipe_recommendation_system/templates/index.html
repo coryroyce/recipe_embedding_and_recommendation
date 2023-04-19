@@ -11,15 +11,24 @@
 
     <!-- OUTPUT RESULTS -->
     {% if recipes | length != 0 %}
-    <br>
-    <p>"{{ cur_query }}" results:</p>
-    <br>
+        <br>
+        <p>"{{ cur_query }}" results:</p>
+        <br>
+        <!--
+        {% for i in range(recipes | length) %}
+            <h3><a href="{{ url_for('show_recipe', index=indices[i]) }}">
+                {{ recipes[i] }}
+            </a></h3>
+        {% endfor %}
+        -->
 
-    {% for i in range(recipes | length) %}
-        <h3><a href="{{ url_for('show_recipe', index=indices[i]) }}">
-            {{ recipes[i] }}
-        </a></h3>
-    {% endfor %}
+        <div class="list-group">
+        {% for i in range(recipes | length) %}
+            <a href="{{ url_for('show_recipe', index=indices[i]) }}" class="list-group-item list-group-item-action">
+                {{ recipes[i] }}
+            </a>
+        {% endfor %}
+        </div>
 
     {% endif %}
 {% endblock %}

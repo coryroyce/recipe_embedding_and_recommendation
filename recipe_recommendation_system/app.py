@@ -1,4 +1,4 @@
-import os, base64
+import os, base64, re
 import json
 import sqlite3
 from flask import Flask, render_template, request
@@ -43,7 +43,12 @@ def show_recipe(index):
         query=q
     )
     data = {ent: sub_ingredients(ent) for ent in ingredient_ents}
-    data_str = json.dumps(data, indent=4)
+
+    for ent in data.keys():
+        ingredients = ingredients.replace(
+            ent, f'<span class="highlighted-word bg-primary text-light">{ent}</span>')
+
+    data_str = json.dumps(data)
 
     return render_template(
         "recipe.html",
