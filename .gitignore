@@ -4,8 +4,11 @@
 **/.pytest_cache
 **/__pycache__/
 **/__pycache__
+__pycache__
+**/*.pyc
 **/.DS_Store
 **/*.gz
 **/*.tar
 **/embeddings_ingredients.tar.gz
 **/embeddings_recipe_titles.tar.gz
+recipe_recommendation_system/recipe_recommendation_system/data/recipeNER/

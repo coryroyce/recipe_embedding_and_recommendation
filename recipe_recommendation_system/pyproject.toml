@@ -9,11 +9,12 @@ packages = [{include = "recipe_recommendation_system"}]
 [tool.poetry.dependencies]
 python = "^3.8"
 pandas = "^1.5.2"
-txtai = "^5.4.0"
+txtai = "~5.4.0"
 jupyterlab = "^3.6.3"
 pathlib = "^1.0.1"
 pytest = "^7.3.1"
 flask = "^2.2.3"
+spacy = {extras = ["cuda-autodetect"], version = "~3.3"}
 
 
 [tool.poetry.group.dev.dependencies]

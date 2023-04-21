@@ -80,7 +80,7 @@ class SemanticSearch:
 
         # Save the pre-computed indices
         self.save_semantic_search_index(
-            embedding=semantic_search.embeddings_recipe_titles,
+            embedding=self.embeddings_recipe_titles,
             embedding_name_to_save="embeddings_recipe_titles",
         )
 
@@ -96,8 +96,8 @@ class SemanticSearch:
         print(f"Generating semantic index for ingredients...")
         self.create_semantic_search_index_ingredients()
 
-        semantic_search.save_semantic_search_index(
-            embedding=semantic_search.embeddings_ingredients,
+        self.save_semantic_search_index(
+            embedding=self.embeddings_ingredients,
             embedding_name_to_save="embeddings_ingredients",
         )
 

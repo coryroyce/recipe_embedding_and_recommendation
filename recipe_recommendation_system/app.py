@@ -2,6 +2,7 @@ import os, base64, re
 import json
 import sqlite3
 from flask import Flask, render_template, request
+import spacy
 
 from recipe_recommendation_system.modules.semantic_search import SemanticSearch
 
@@ -9,6 +10,9 @@ app = Flask(__name__)
 
 ingredient_embedding = SemanticSearch()
 ingredient_embedding.run_prep_process()
+
+spacy.prefer_gpu()
+nlp = spacy.load('./recipe_recommendation_system/recipe_recommendation_system/data/recipeNER')
 
 cur_query = ""
 
@@ -36,8 +40,12 @@ def show_recipe(index):
     recipe = ingredient_embedding.df_recipe.iloc[index]
     title = recipe["title"]
     directions = "\n".join(json.loads(recipe["directions"]))
-    ingredients = "\n".join(json.loads(recipe["ingredients_with_measurements"]))
-    ingredient_ents = json.loads(recipe["ingredients"])
+    ingredient_list = json.loads(recipe["ingredients_with_measurements"])
+    ingredients = "\n".join(ingredient_list)
+
+    docs = [nlp(ing) for ing in ingredient_list]
+    ingredient_ents = [str(ent) for doc in docs for ent in doc.ents]
+    print(ingredient_ents)
 
     sub_ingredients = lambda q: ingredient_embedding.query_semantic_index_ingredients(
         query=q
