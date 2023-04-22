@@ -15,9 +15,12 @@ Note that this repo uses [Poetry](https://python-poetry.org/docs/) to manage the
 1. Run `poetry install` to load all of the needed python packages and create a virtual environnement.
 1. Activate the virtual environment
     * `source .venv/bin/activate`
+1. Change back into the main project root directory
+    * `cd ..`
 1. Run Flask app to run locally
     * `python -m flask --app app run`
     * Click the link to the local port and interact with the demo
+    * In the terminal use `cmd+C` to stop running the Flask app
 
 ## Architecture
 
