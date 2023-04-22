@@ -21,10 +21,10 @@ class SemanticSearch:
             f"recipe_recommendation_system/recipe_recommendation_system/data"
         )
         self.embeddings_ingredients = Embeddings(
-            {"path": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"}
-        )  # "sentence-transformers/nli-mpnet-base-v2"
+            {"path": "sentence-transformers/all-mpnet-base-v2"}
+        )  # "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
         self.embeddings_recipe_titles = Embeddings(
-            {"path": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"}
+            {"path": "sentence-transformers/all-mpnet-base-v2"}
         )
         self.top_k_matches_ingredients: int = 5
         self.top_k_matches_recipe_titles: int = 5
