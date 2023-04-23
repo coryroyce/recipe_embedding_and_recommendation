@@ -14,7 +14,7 @@ jupyterlab = "^3.6.3"
 pathlib = "^1.0.1"
 pytest = "^7.3.1"
 flask = "^2.2.3"
-spacy = {extras = ["cuda-autodetect"], version = "~3.3"}
+spacy = "^3.3"
 
 
 [tool.poetry.group.dev.dependencies]

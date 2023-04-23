@@ -17,13 +17,11 @@ Note that this repo uses [Poetry](https://python-poetry.org/docs/) to manage the
     * `source .venv/bin/activate`
 1. Change back into the main project root directory
     * `cd ..`
-1. Run a spacy english model download
-    * `python -m spacy download en_core_web_trf`
-1. Download the spacy model from [RecipeNER](https://drive.google.com/drive/folders/165zD-ZsILxCzls1OHSISW9xKAW4mwSAv?usp=share_link)
+1. Download the spacy model from [RecipeNER](https://drive.google.com/file/d/1_Ew6UaV-y3nFjIDMv9hlYlRng-MAONZ6/view?usp=share_link)
     * copy to `recipe_recommendation_system/recipe_recommendation_system/data/recipeNER`
 
 1. Run Flask app to run locally
-    * `python -m flask --app app run`
+    * `python recipe_recommendation_system/app.py `
     * Click the link to the local port and interact with the demo
     * In the terminal use `cmd+C` to stop running the Flask app
 
