@@ -75,9 +75,12 @@ def show_recipe(index):
     )
     data = {ent: sub_ingredients(ent) for ent in ingredient_ents}
 
-    for ent in data.keys():
-        ingredients = ingredients.replace(
-            ent, f'<span class="highlighted-word bg-primary text-light">{ent}</span>')
+    ingredient_ents = sorted(ingredient_ents, key=len, reverse=True)
+    for ent in ingredient_ents:
+        ingredients = re.sub(
+            r'(?<!>){}(?!<)'.format(re.escape(ent)), 
+            f'<span class="highlighted-word bg-primary text-light">{ent}</span>',
+            ingredients)
 
     data_str = json.dumps(data)
 
