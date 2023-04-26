@@ -51,8 +51,11 @@ def show_recipe(index):
     recipe = ingredient_embedding.df_recipe.iloc[index]
     title = recipe["title"]
     directions = "\n".join(json.loads(recipe["directions"]))
-    ingredients = "\n".join(json.loads(recipe["ingredients_with_measurements"]))
+    ingredient_list = json.loads(recipe["ingredients_with_measurements"])
     ingredient_ents = json.loads(recipe["ingredients"])
+
+    add_li = [f'<li> {s} </li>' for s in ingredient_list]
+    ingredients = '\n'.join(['<ul>'] + add_li + ['</ul>'])
 
     sub_ingredients = lambda q: ingredient_embedding.query_semantic_index_ingredients(
         query=q
